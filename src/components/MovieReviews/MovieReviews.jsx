@@ -7,8 +7,9 @@ const MovieReviews = () => {
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
-    if (!movieId) return;
-    fetchMovieReviews(movieId).then(setReviews);
+    fetchMovieReviews(movieId)
+      .then(setReviews)
+      .catch(error => console.error('Error fetching reviews:', error));
   }, [movieId]);
 
   return (

@@ -9,8 +9,9 @@ const MovieCast = () => {
   const [cast, setCast] = useState([]);
 
   useEffect(() => {
-    if (!movieId) return;
-    fetchMovieCast(movieId).then(setCast);
+    fetchMovieCast(movieId)
+      .then(setCast)
+      .catch(error => console.error('Error fetching cast:', error));
   }, [movieId]);
 
   return (
