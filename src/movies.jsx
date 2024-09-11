@@ -29,3 +29,21 @@ export const fetchMovieDetails = async (movieId) => {
   });
   return response.data;
 };
+
+export const fetchMovieCast = async (movieId) => {
+  const response = await axios.get(`${BASE_URL}/movie/${movieId}/credits`, {
+    params: {
+      api_key: API_KEY,
+    },
+  });
+  return response.data.cast;
+};
+
+export const fetchMovieReviews = async (movieId) => {
+  const response = await axios.get(`${BASE_URL}/movie/${movieId}/reviews`, {
+    params: {
+      api_key: API_KEY,
+    },
+  });
+  return response.data.results;
+};
