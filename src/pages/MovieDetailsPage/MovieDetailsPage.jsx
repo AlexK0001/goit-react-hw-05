@@ -1,5 +1,5 @@
 import { useParams, useLocation, Link, Outlet, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { fetchMovieDetails } from '../../movies';
 
 const MovieDetailsPage = () => {
@@ -7,7 +7,7 @@ const MovieDetailsPage = () => {
   const [movieData, setMovieData] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
-  const backLink = location.state?.from ?? '/movies';
+  const backLinkRef = useRef(location.state?.from ?? '/');
 
   useEffect(() => {
     if (!movieId) return;
@@ -19,10 +19,10 @@ const MovieDetailsPage = () => {
   const defaultImg = 'https://dl-media.viber.com/10/share/2/long/vibes/icon/image/0x0/95e0/5688fdffb84ff8bed4240bcf3ec5ac81ce591d9fa9558a3a968c630eaba195e0.jpg';
 
   const handleGoBack = () => {
-    if (location.key !== 'default') {
+    if (location.state?.from) {
       navigate(-1);
     } else {
-      navigate('/movies');
+      navigate(backLinkRef.current);
     }
   };
 
@@ -38,8 +38,8 @@ const MovieDetailsPage = () => {
       <p>{movieData.overview}</p>
 
       <nav>
-        <Link to="cast" state={{ from: backLink }}>Cast</Link>
-        <Link to="reviews" state={{ from: backLink }}>Reviews</Link>
+        <Link to="cast" state={{ from: backLinkRef.current }}>Cast</Link>
+        <Link to="reviews" state={{ from: backLinkRef.current }}>Reviews</Link>
       </nav>
 
       <Outlet />
